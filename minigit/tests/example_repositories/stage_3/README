@@ -1,0 +1,7 @@
+## COMMAND RUN
+
+```
+./minigit init	
+./minigit add gamma.txt beta.txt alpha.txt
+./minigit commit "feat: my first commit"
+```
