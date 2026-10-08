@@ -20,7 +20,7 @@ src/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TEST): tests/test_suite.c
-	$(CC) $(CFLAGS) $(TEST_SRC) -o $@
+	$(CC) $(CFLAGS) $(TEST).c -o $@
 
 check: $(TARGET) $(TEST)
 	./$(TEST)

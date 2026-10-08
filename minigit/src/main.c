@@ -18,6 +18,9 @@ int main(int argc, char *argv[])
 
         return init();
     }
-
+    else if (strcmp(argv[1], "add") == 0)
+    {
+        return add(argc - 2, argv + 2);
+    }
     return 0;
 }
