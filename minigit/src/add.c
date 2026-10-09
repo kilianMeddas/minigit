@@ -8,8 +8,8 @@
 #include <unistd.h>
 
 #include "helpers.h"
-#include "minigit.h"
 #include "index.h"
+#include "minigit.h"
 
 int add(int argc, char *path[])
 {
@@ -17,7 +17,7 @@ int add(int argc, char *path[])
 
     for (int i = 0; i < len; i++)
     {
-        if (check_file(path[i])!=0)
+        if (check_file(path[i]) != 0)
             return 1;
     }
 
@@ -72,7 +72,6 @@ int add(int argc, char *path[])
         free(final);
     }
 
-    // MAKE_INDEX
     make_index(path, argc);
 
     return 0;
