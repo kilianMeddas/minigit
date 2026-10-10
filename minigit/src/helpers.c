@@ -1,6 +1,11 @@
 #define _POSIX_C_SOURCE 200809L
 #include "helpers.h"
 
+/**
+** \brief Count the characters in a file.
+** \param file_in Path to the file
+** \return Number of characters read, or -1 on failure
+*/
 int count_char(const char *file_in)
 {
     FILE *fd = fopen(file_in, "r");
@@ -23,6 +28,11 @@ int count_char(const char *file_in)
     return count;
 }
 
+/**
+** \brief Read the contents of a file into a dynamically allocated buffer.
+** \param file_in Path to the file
+** \return Pointer to the file contents, or NULL on failure
+*/
 char *get_content(const char *file_in)
 {
     long numbytes;
@@ -50,6 +60,12 @@ char *get_content(const char *file_in)
     return buffer;
 }
 
+/**
+** \brief Compute the SHA-1 hash of an object.
+** \param final Object data
+** \param final_size Size of the object in bytes
+** \param sha Buffer to store the hexadecimal hash
+*/
 void make_sha(unsigned char *final, int final_size, char *sha)
 {
     unsigned char hash[SHA_DIGEST_LENGTH];
@@ -64,6 +80,13 @@ void make_sha(unsigned char *final, int final_size, char *sha)
     sha[SHA_DIGEST_LENGTH * 2] = '\0';
 }
 
+/**
+** \brief Build a Git blob object and compute its SHA-1 hash.
+** \param path Path to the file
+** \param sha Buffer to store the hexadecimal hash
+** \param final_size Pointer to store the object size in bytes
+** \return Pointer to the object data, or NULL on failure
+*/
 unsigned char *make_object(char *path, char *sha, int *final_size)
 {
     char *type = "blob ";
@@ -103,6 +126,11 @@ unsigned char *make_object(char *path, char *sha, int *final_size)
     return final;
 }
 
+/**
+** \brief Check whether a path refers to a regular file.
+** \param path Path to check
+** \return 0 if the path is a regular file, 1 otherwise
+*/
 int check_file(char *path)
 {
     struct stat path_stat;
@@ -122,6 +150,13 @@ int check_file(char *path)
     return 0;
 }
 
+/**
+** \brief Create an index entry for a file.
+** \param path Path to the file
+** \param sha Buffer to store the object's hexadecimal hash
+** \param final_size Pointer to store the object size in bytes
+** \return Index entry, with a NULL path on failure
+*/
 struct entry make_entry(char *path, char *sha, int *final_size)
 {
     struct entry e = { 0 };

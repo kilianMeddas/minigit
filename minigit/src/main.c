@@ -3,6 +3,13 @@
 
 #include "minigit.h"
 
+/**
+** \brief Execute the requested MiniGit command.
+** \param argc Number of command-line arguments
+** \param argv Array of command-line arguments
+** \return Command exit status, 1 if no action is provided, or 128
+**         if the init command receives an invalid number of arguments
+*/
 int main(int argc, char *argv[])
 {
     if (argc < 2)

@@ -73,5 +73,5 @@ Test(minigit_add, fails_if_file_does_not_exist, .init = setup_test_directory,
 
     char *paths[] = { "missing_file.txt" };
 
-    cr_assert_eq(add(1, paths), 1);
+    cr_assert_eq(add(1, paths), 128);
 }

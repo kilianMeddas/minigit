@@ -2,6 +2,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+/**
+** \brief Initialize the MiniGit repository structure.
+** \return 0 on success, 128 on failure
+*/
 int init(void)
 {
     int head;

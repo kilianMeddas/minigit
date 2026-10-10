@@ -1,5 +1,12 @@
 #include "index.h"
 
+/**
+** \brief Compare two index entries by their paths.
+** \param a Pointer to the first index entry
+** \param b Pointer to the second index entry
+** \return Negative, zero, or positive if the first path is
+**         smaller, equal, or greater than the second path
+*/
 int compare(const void *a, const void *b)
 {
     const struct entry *entry_a = a;
@@ -8,6 +15,9 @@ int compare(const void *a, const void *b)
     return strcmp(entry_a->path, entry_b->path);
 }
 
+/**
+** \brief Append the SHA-1 hash of the index contents.
+*/
 void add_index_sha(void)
 {
     FILE *file = fopen(".mgit/index", "rb");
@@ -45,6 +55,12 @@ void add_index_sha(void)
 
     fclose(file);
 }
+
+/**
+** \brief Create an index file from the given paths.
+** \param path Array of paths to add to the index
+** \param argc Number of paths to add
+*/
 void create_index(char *path[], int argc)
 {
     uint64_t number_entries = argc;
@@ -111,6 +127,12 @@ void create_index(char *path[], int argc)
     free(entries);
 }
 
+/**
+** \brief Write the index header and entries to a file.
+** \param file File to write to
+** \param entries Array of index entries
+** \param number_entries Number of entries to write
+*/
 void write_entries(FILE *file, struct entry *entries, uint64_t number_entries)
 {
     size_t header_len = 16;
@@ -135,6 +157,13 @@ void write_entries(FILE *file, struct entry *entries, uint64_t number_entries)
     }
 }
 
+/**
+** \brief Add new entries to the existing index.
+** \param path Array of paths to add
+** \param argc Number of paths to add
+** \param number_entries Number of existing entries
+** \param old_entries Array of existing index entries
+*/
 void add_new_index(char *path[], int argc, uint64_t number_entries,
                    struct entry *old_entries)
 {
@@ -175,6 +204,11 @@ void add_new_index(char *path[], int argc, uint64_t number_entries,
     free(entries);
 }
 
+/**
+** \brief Read an index entry from a file.
+** \param file File to read from
+** \param entry Entry in which to store the data
+*/
 void read_entry(FILE *file, struct entry *entry)
 {
     fread(&entry->st, sizeof(entry->st), 1, file);
@@ -193,6 +227,11 @@ void read_entry(FILE *file, struct entry *entry)
     entry->path[entry->path_length] = '\0';
 }
 
+/**
+** \brief Create or update the index with the given paths.
+** \param path Array of paths to add
+** \param argc Number of paths to add
+*/
 void make_index(char *path[], int argc)
 {
     FILE *file = fopen(".mgit/index", "rb");

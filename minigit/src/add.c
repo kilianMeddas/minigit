@@ -11,6 +11,12 @@
 #include "index.h"
 #include "minigit.h"
 
+/**
+** \brief Add files by creating object directories and updating the index
+** \param argc Number of paths to add
+** \param path Array of paths to add
+** \return 0 on success, 128 on failure
+*/
 int add(int argc, char *path[])
 {
     int len = argc;
@@ -18,7 +24,7 @@ int add(int argc, char *path[])
     for (int i = 0; i < len; i++)
     {
         if (check_file(path[i]) != 0)
-            return 1;
+            return 128;
     }
 
     for (int i = 0; i < len; i++)
@@ -27,13 +33,13 @@ int add(int argc, char *path[])
         char sha[SHA_DIGEST_LENGTH * 2 + 1];
         unsigned char *final = make_object(path[i], sha, &final_size);
         if (final == NULL)
-            return 1;
+            return 128;
         char *str = malloc(sizeof(char) * (2 + 1));
 
         if (str == NULL)
         {
             free(final);
-            return 1;
+            return 128;
         }
 
         str[0] = sha[0];
@@ -62,7 +68,7 @@ int add(int argc, char *path[])
         {
             free(str);
             free(final);
-            return 1;
+            return 128;
         }
 
         fwrite(final, sizeof(char), final_size, fptr);
